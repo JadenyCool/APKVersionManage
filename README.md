@@ -17,10 +17,12 @@ Centos7.4 + Python3 + Flask + mysql + nginx + uwsgi
 二、Flask可执行的虚拟环境搭建：
 
 将代码拷贝到虚拟环境的目录
-执行以下命令： python manage.py db init 
-              python manage.py db migrate
-              python manage.py db upgrade 
-          以上数据库表就完成了创建
+执行以下命令： 
+''' python manage.py db init 
+    python manage.py db migrate
+    python manage.py db upgrade 
+'''
+以上数据库表就完成了创建
           
 三、安装uwsgi并修改uwsgi.ini文件
 
