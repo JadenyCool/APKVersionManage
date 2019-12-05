@@ -1,0 +1,59 @@
+{% extends 'front/front_base.html' %}
+
+{% block page_title %}
+    华为线APP转测试版本发布平台
+{% endblock %}
+{% block head %}
+  <script src=" {{ url_for('static', filename='front/js/front_upload.js') }}"></script>
+{% endblock %}
+
+
+{% block body %}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>版本号</th>
+            <th>版本状态</th>
+            <th>版本描述</th>
+            <th>上传日期</th>
+            <th>操 作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for file in releases %}
+
+            <tr data-id="{{ file.id }}" data-status="{{ file.release }}">
+                <td>{{ file.verNo }}</td>
+                {% if file.release == 1 %}
+                    <td><span class="badge badge-success">转测试</span></td>
+                {% else %}
+                    <td><span class="badge badge-default">已下架</span></td>
+                {% endif %}
+
+                <td>{{ file.descript }}</td>
+                <td>{{ file.create_time }}</td>
+                <td class="button-items">
+                    {% if file.release == 1 %}
+
+                        <a href="{{ url_for('front.download') }}">
+                            <button class="btn btn-outline-info waves-effect waves-light">预览</button>
+                        </a>
+                        <button class="btn btn-outline-danger waves-effect waves-light del-version">删除</button>
+                    {% else %}
+
+                        <button class="btn btn-outline-success waves-effect waves-light re-release">转测</button>
+                        <button class="btn btn-outline-danger waves-effect waves-light del-version">删除</button>
+                    {% endif %}
+
+
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <div style="float: right">
+        {{ pagination.links }}
+    </div>
+
+{% endblock %}

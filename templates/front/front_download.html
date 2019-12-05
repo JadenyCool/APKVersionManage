@@ -1,0 +1,102 @@
+{% from 'common/_macros.html' import static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>APP下载页面</title>
+
+    <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{{ static(filename = 'common/zlajax.js') }}"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/front_download.css') }}">
+    <script src="{{ static('front/js/front_download.js') }}"></script>
+</head>
+<body background="{{ static('images/backgroupicon.jpg') }}">
+
+<div class="form-group">
+    <div class="left-box">
+        <div class="logo-box">
+            {% if pname %}
+                <img src="{{ static('images/{}.png'.format(pname)) }}" alt="">
+            {% endif %}
+            {% if fileInfor.is_commercial == 1 %}
+                <span class="label label-success">商用版本</span>
+            {% else %}
+                <span class="label label-default">内测版本</span>
+            {% endif %}
+
+
+        </div>
+        <h2 class="page-title">{{ apkname }}({{ apkcode }})</h2>
+        <ul class="text-info">
+            {% if fileInfor.release == 1 %}
+                <li>迭代版本号：<span style="color: red">{{ fileInfor.verNo }}</span></li>
+                <li>备注：<p style="color: #181b80;line-height:30px;">{{ fileInfor.descript }}</p></li>
+                <li>转测试时间：{{ fileInfor.create_time }}</li>
+            {% endif %}
+
+        </ul>
+
+
+        <a href="{{ url_for('front.downloadFile', pname=pname) }}">
+            <button type="submit" class="btn btn-primary btn-lg btn-block download-btn">下载版本</button>
+        </a>
+
+        <div class="bottom-box">
+            <span id="btn">历史版本>>></span>
+            <table class="table table-condensed" style="width: 600px; display: none " id="content">
+                <thead>
+                <tr>
+                    <th>版本号</th>
+                    <th>版本描述</th>
+                    <th>发布时间</th>
+                    <th>商用/内测</th>
+                    <th>版本下载</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for hv in historiesVersion %}
+                    <tr data-id="{{ hv.id }}" id="historiesId">
+                        <td>{{ hv.verNo }}</td>
+                        <td>{{ hv.descript }}</td>
+                        <td>{{ hv.create_time }}</td>
+
+                        {% if hv.is_commercial == 1 %}
+                            <td><span class="label label-success">商用版本</span></td>
+                        {% else %}
+                            <td><span class="label label-default">内测版本</span></td>
+
+                        {% endif %}
+                        <td>
+                            <a href="{{ url_for('front.download_histories_APP',id=hv.id) }}">
+                                <button class="btn btn-default btn-xs">下载</button>
+                                {#                                <button class="btn btn-default btn-xs download-histories">下载</button>#}
+                            </a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="right-box">
+        <div class="mobile-ico-box">
+            <img src="{{ static('images/ic_mobile.png') }}" alt="" class="background-png">
+
+            <div class="qrcodeImg">
+                <img src="{{ url_for('common.qrcode', pname=pname) }}" alt="" class="code-png">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

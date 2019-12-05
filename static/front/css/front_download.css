@@ -1,0 +1,119 @@
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    list-style: none;
+}
+
+/*请除浏览器给的默认样式*/
+
+body {
+    overflow-x: hidden; /* 纵向如果内容超出则会显示滚动条*/
+    overflow-y: auto; /* 横向隐藏*/
+}
+
+.form-group {
+    /*margin-top: 250px;*/
+    width: 700px;
+    margin: 0 auto;
+    padding-top: 100px;
+
+}
+
+.left-box {
+    /*padding-top: 60px;*/
+    float: left;
+    width: 350px;
+}
+
+.download-btn {
+    background-color: #8393f5;
+    width: 70%;
+    height: 44px;
+    color: #fff;
+    font-size: 14px;
+    margin-top: 16px;
+    border-color: transparent;
+}
+
+.logo-box img {
+    overflow: hidden;
+    width: 126px;
+    height: 126px;
+    border-radius: 15px;
+    margin-top: 80px;
+    margin-left: 30px;
+    display: block;
+    vertical-align: middle
+}
+
+.logo-box #status {
+    text-align: center;
+    /*display:block;*/
+}
+
+
+.left-box .text-info {
+    overflow: hidden;
+    color: #242a34;
+    font-size: 20px;
+    text-align: left;
+    line-height: 16px;
+    margin-top: 2px;
+    opacity: .5;
+    float: left;
+
+}
+
+
+.text-info li {
+    list-style: none;
+    /*padding: 0 auto;*/
+    padding: 10px;
+
+}
+
+.right-box {
+    float: right;
+    width: 350px;
+    padding-top: 60px;
+}
+
+.right-box .mobile-ico-box {
+    position: relative;
+    display: block;
+}
+
+.right-box .mobile-ico-box img {
+
+    position: absolute;
+    /*图片的重叠顺序*/
+    z-index: 1;
+    width: 300px;
+    height: auto;
+    display: block;
+
+}
+
+.right-box .qrcodeImg img {
+    position: absolute;
+    width: 150px;
+    height: auto;
+    left: 32px;
+    margin-top: 150px;
+
+}
+
+.bottom-box {
+    padding-top: 40px;
+
+}
+
+.bottom-box #btn {
+    color: #7acaff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+
+}

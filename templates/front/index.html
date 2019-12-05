@@ -1,0 +1,161 @@
+{% extends 'front/front_base.html' %}
+{% from 'common/_macros.html' import static %}
+
+{% block head %}
+    <script src="{{ static('front/js/front_addprojectline.js') }}"></script>
+{% endblock %}
+
+{% block page_title %}APP版本发布平台{% endblock %}
+
+{% block body %}
+    {#   <h2>品联APP转测试发布</h2>#}
+    <div class="row">
+        <div class="col-12">
+            <div class="card m-b-30">
+                <div class="card-body">
+                    <h4 class="mt-0 header-title">品联Android APP转测试发布</h4>
+
+                    {#                    增加项目线#}
+                    <div style="background: #ecedf0">
+                        <div class="top-box" style="float: right;overflow: hidden">
+                            <button class="btn btn-warning" type="button" data-toggle="modal" data-target="#addproject"  id="addprojectLine">
+                                添加项目线
+                            </button>
+
+                        </div>
+                    </div>
+                    <form action="{{ url_for('front.upload') }}" method="POST" enctype="multipart/form-data"
+                          style="padding-top: 30px">
+
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        {#https://www.cnblogs.com/kemingli/p/10545358.html#}
+                        <div style="padding-top: 10px; font-weight: bold; " class="row">
+                            <span>项目线选择： </span>
+                            <div class="btn-group">
+                                {% for projectline in AllProjectLines %}
+                                    {% if projectline.id == current_projectId %}
+
+                                        <div class="btn-group dropup mo-mb-2">
+                                            <button type="button" class="btn btn-info" style="border: 3px">
+                                                <a href="{{ url_for('front.index', pd = projectline.id) }}" id="pid"
+                                                   data-id="{{ projectline.id }}"
+                                                        {#                                                   class="list-group-item active"#}
+                                                   style="padding-left: 10px; font-weight: bold; color: #2d3d91">{{ projectline.projectName }}</a>
+
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-info dropdown-toggle dropdown-toggle-split"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <div class="dropdown-menu" data-id="{{ projectline.id }}"
+                                                 data-CHname="{{ projectline.projectName }}"
+                                                 data-Ename="{{ projectline.project_ename }}" id="Pmenubar">
+                                                <a class="dropdown-item" href="{{ url_for('front.modifyproject') }}"
+                                                   id="modifyPro">修改</a>
+                                                <a class="dropdown-item" href="{{ url_for('front.delProject') }}"
+                                                   id="delP">删除</a>
+                                            </div>
+                                        </div>
+
+                                    {% else %}
+                                        <a href="{{ url_for('front.index', pd = projectline.id) }}"
+                                           class="list-group-item ">{{ projectline.projectName }}</a>
+
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" style="padding-top: 40px;">
+                            <label>选择发布文件：</label>
+                            <div class="btn-group">
+                                <input type="file" id="media" name="file" accept=".apk, .ipa" style="width: 100%">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group" style="padding-top: 40px; ">
+                            <label>是否商用:(<code class="highlighter-rouge">必选</code>)</label>
+
+                            <select required class="form-check-inline" name="is_commercial" id="is_commercial"
+                                    style="width: 150px; height: 30px">
+                                <option value="0" selected="selected">内测版本</option>
+                                <option value="1">商用版本</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" style="padding-top: 40px">
+                            <label>迭代版本号:<code class="highlighter-rouge">(必填)</code></label>
+                            <input type="text" required class="form-control" name="verno" placeholder="SPC100B092"
+                                   style="width: 500px"/>
+                        </div>
+
+
+                        <div class="form-group" style="padding-top: 40px">
+                            <label>版本描述:</label>
+                            <textarea name="desc" class="form-control" id="elm1" cols="30" rows="10"></textarea>
+                        </div>
+
+                        <div class="text-center m-t-15">
+                            <input type="submit" class="btn btn-primary waves-effect waves-light" value="提交并发布">
+                        </div>
+
+                    </form>
+                    {#                    进度条#}
+
+                    <div class="form-group" style="margin-top: 30px; width: 50%">
+                        <div class="progress" style="display: none;">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                 aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="addproject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         style="margin-top: 300px">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">添加项目</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+
+                        <div class="form-group">
+                            <div class="col-12">
+                                <label>项目名称：</label>
+                                <input class="form-control" type="text" name="pname" placeholder="项目名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-12">
+                                <label>项目英文（不能有空格）：</label>
+                                <input class="form-control" type="text" name="pENname" placeholder="项目英文名称">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="btn-submit">确认增加</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src=" {{ url_for('static', filename='front/js/front_upload.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='front/js/tinymce/tinymce.min.js') }}"></script>
+
+{% endblock %}

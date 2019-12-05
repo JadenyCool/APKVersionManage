@@ -1,0 +1,41 @@
+{% extends 'front/front_base.html' %}
+{% from 'common/_macros.html' import static %}
+
+
+{% block page_title %}
+    修改密码
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ static('front/css/resetpwd.css') }}">
+    <script src="{{ static('front/js/front_resetpwd.js') }}"></script>
+
+{% endblock %}
+
+{% block body %}
+
+    <form action="" method="post">
+        <div class="pwd-box">
+            <div class="input-group">
+                <span class="input-group-text">旧密码</span>
+                <input type="password" class="form-control" name="oldpwd" placeholder="旧密码">
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">新密码</span>
+                <input type="password" class="form-control" name="newpwd1" placeholder="新密码">
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-text">确认密码</span>
+                <input type="password" class="form-control" name="newpwd2" placeholder="确认新密码">
+            </div>
+
+            <div class="input-group ">
+                <button type="button" class="btn btn-primary btn-lg active" id="submit-btn">确认修改</button>
+            </div>
+        </div>
+    </form>
+
+
+{% endblock %}
+

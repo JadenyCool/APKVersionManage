@@ -1,0 +1,10 @@
+.login-box {
+    height: 400px;
+    overflow: hidden;
+}
+
+.resetpwd-link{
+    overflow: hidden;
+    margin-right: auto;
+    float: right;
+}

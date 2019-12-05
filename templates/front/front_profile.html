@@ -1,0 +1,62 @@
+{% extends 'front/front_base.html' %}
+{% from 'common/_macros.html' import static %}
+
+
+
+{% block page_title %}
+    个人信息
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ static('front/css/front_profile.css') }}">
+{% endblock %}
+
+{% block body %}
+
+ {% set user = g.front_user %}
+        <div class="profile-box" style="padding-top: 25px">
+        <table class="table table-bordered">
+            <tr data-name="{{ user.username }}">
+                <td>姓名</td>
+                <td>{{ user.username }}</td>
+                <td>
+                    <button class="btn btn-info btn-sm mprofile-btn" type="submit">修改</button>
+                </td>
+            </tr>
+            <tr data-tel="{{ user.telephone }}">
+                <td>电话</td>
+                <td>{{ user.telephone }}</td>
+                 <td>
+                    <button class="btn btn-info btn-sm mprofile-btn" type="submit">修改</button>
+                </td>
+            </tr>
+            <tr data-email="{{ user.email }}">
+                <td>邮箱</td>
+                <td>{{ user.email }}</td>
+                 <td>
+                    <button class="btn btn-info btn-sm mprofile-btn" type="submit">修改</button>
+                </td>
+            </tr>
+            <tr data-signature="{{ user.signature }}">
+                <td>个性签名</td>
+                <td>{{ user.signature }}</td>
+                 <td>
+                    <button class="btn btn-info btn-sm mprofile-btn" type="submit">修改</button>
+                </td>
+            </tr>
+            <tr data-sex="{{ user.gender }}">
+                <td>性别</td>
+                <td>{{ user.gender }}</td>
+                 <td>
+                    <button class="btn btn-info btn-sm mprofile-btn" type="submit">修改</button>
+                </td>
+            </tr>
+            <tr>
+                <td>加入时间</td>
+                <td colspan="2">{{ user.join_time }}</td>
+            </tr>
+        </table>
+    </div>
+
+{% endblock %}
+

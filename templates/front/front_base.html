@@ -1,0 +1,386 @@
+{% from 'common/_macros.html' import static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>品联科技 | APP版本发布管理平台</title>
+
+    <link rel="shortcut icon" href="{{ url_for('static',filename='front/image/favicon.ico') }}" type="image/x-icon"/>
+
+    <!--Morris Chart CSS -->
+    {#    <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>#}
+    {#    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">#}
+    {#    <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>#}
+    {% include 'common/_heads.html' %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/morris/morris.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/metismenu.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/style.css') }}">
+
+
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+
+<!-- Begin page -->
+<div id="wrapper">
+
+    <!-- Top Bar Start -->
+    <div class="topbar">
+
+        <!-- LOGO -->
+        <div class="topbar-left">
+            <a href="/" class="logo">
+                    <span class="logo-light">
+                            <i class="glyphicon glyphicon-home"></i> APP版本管理
+                        </span>
+                <span class="logo-sm">
+                            <i class="glyphicon glyphicon-home"></i>
+                        </span>
+            </a>
+        </div>
+
+        <nav class="navbar-custom">
+            <ul class="navbar-right list-inline float-right mb-0">
+
+                <!-- full screen -->
+                <li class="dropdown notification-list list-inline-item d-none d-md-inline-block">
+                    <a class="nav-link waves-effect" href="#" id="btn-fullscreen">
+                        <i class="glyphicon glyphicon-fullscreen"></i>
+                    </a>
+                </li>
+
+                <!-- full screen -->
+                <li class="list-inline-item d-none d-md-inline-block">
+                    <a class="nav-link waves-effect" href="#">
+                        <span style="font-size: medium">{{ g.front_user.username }}</span>
+                    </a>
+                </li>
+
+                <li class="dropdown notification-list list-inline-item">
+                    <div class="dropdown notification-list nav-pro-img">
+                        <a class="dropdown-toggle nav-link arrow-none nav-user" data-toggle="dropdown" href="#"
+                           role="button" aria-haspopup="false" aria-expanded="false">
+                            <img src="{{ url_for('static', filename='front/image/users/user-4.jpg') }}" alt="user"
+                                 class="rounded-circle">
+
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                            <!-- item-->
+                            <a class="dropdown-item" href="#"><i
+                                    class="glyphicon glyphicon-user"></i>个人信息</a>
+                            <a class="dropdown-item d-block" href="{{ url_for('front.resetpwd') }}"><i
+                                    class="glyphicon glyphicon-cog"></i>
+                                修改密码</a>
+                            <div class="dropdown-divider"></div>
+                            {#                            <a class="dropdown-item text-danger" href="#"><i class="mdi mdi-power text-danger"></i>#}
+                            <a class="dropdown-item text-danger" href="{{ url_for('front.logout') }}"><i
+                                    class="glyphicon glyphicon-chevron-right text-danger"></i>
+                                注销</a>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+
+            <ul class="list-inline menu-left mb-0">
+                <li class="float-left">
+                    <button class="button-menu-mobile open-left waves-effect">
+                        <i class="glyphicon glyphicon-align-justify"></i>
+                    </button>
+                </li>
+                <li class="d-none d-md-inline-block">
+                    <form role="search" class="app-search">
+                        <div class="form-group mb-0">
+                            <input type="text" class="form-control" name="search" placeholder="Search..">
+                            <button type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+
+        </nav>
+
+    </div>
+    <!-- Top Bar End -->
+
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="left side-menu">
+        <div class="slimscroll-menu" id="remove-scroll">
+
+            <!--- Sidemenu -->
+            <div id="sidebar-menu">
+                <!-- Left Menu Start -->
+                <ul class="metismenu" id="side-menu">
+                    <li class="menu-title">菜单</li>
+                    <li>
+                        <a href="/" class="waves-effect">
+                            <i class="glyphicon glyphicon-th-large"></i><span
+                                class="badge badge-success badge-pill float-right">12+</span> <span> 版本上传 </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="javascript:void(0);" class="waves-effect"><i
+                                class="glyphicon glyphicon-tags"></i><span> APK版本管理 <span
+                                class="float-right menu-arrow"><i
+                                class="glyphicon glyphicon-menu-right"></i></span> </span></a>
+                        <ul class="submenu">
+                            {% for pline in g.projectLine %}
+                                {% if not pline %}
+                                    pass
+                                {% else %}
+                                    <li>
+                                    <a href="{{ url_for('front.ReleaseAPK', projectname='{}'.format(pline.project_ename) )}}">{{ pline.projectName }}</a>
+                                {% endif %}
+
+                            {% endfor %}
+{##}
+{#                            <li><a href="{{ url_for('front.ReleaseAPK', projectname='fusionsolar') }}">华为 6.0</a>#}
+{#                            </li>#}
+{#                            <li><a href="{{ url_for('front.ReleaseAPK', projectname='icleanpower') }}">华为 5.0</a>#}
+                            </li>
+                            {#                            <li><a href="#">Email Compose</a></li>#}
+                        </ul>
+                    </li>
+                    <li>
+{#                        <a href="javascript:void(0);" class="waves-effect"><i#}
+{#                                class="glyphicon glyphicon-random"></i><span> 自营项目线 <span#}
+{#                                class="float-right menu-arrow"><i#}
+{#                                class="glyphicon glyphicon-menu-right"></i></span> </span></a>#}
+{#                        <ul class="submenu" id="addprojecttext">#}
+{#                            <li><a href="{{ url_for('front.ReleaseAPK', projectname='eHome') }}">品能者</a></li>#}
+{#                            <li><a href="{{ url_for('front.ReleaseAPK', projectname='ptm') }}">移动溯源</a></li>#}
+{#                            <li><a href="{{ url_for('front.ReleaseAPK', projectname='okr') }}">OKR</a></li>#}
+{#                            <li><a href="{{ url_for('front.ReleaseAPK', projectname='atesi') }}">阿特斯</a></li>#}
+{#                        </ul>#}
+{##}
+{#                    </li>#}
+                    {#                      <li>#}
+                    {#                        <a href="{{ url_for('front.ver_release') }}" class="waves-effect">#}
+                    {#                            <i class="glyphicon glyphicon-random"></i> <span> 版本发布 </span>#}
+                    {#                        </a>#}
+                    {#                    </li>#}
+
+                    {#                    <li>#}
+                    {#                        <a href="#" class="waves-effect"><i class="icon-calendar"></i><span> 日历 </span></a>#}
+                    {#                    </li>#}
+                    {##}
+                    {#                    <li>#}
+                    {#                        <a href="javascript:void(0);" class="waves-effect"><i#}
+                    {#                                class="icon-paper-sheet"></i><span> 页面 <span class="float-right menu-arrow"><i#}
+                    {#                                class="mdi mdi-chevron-right"></i></span> </span></a>#}
+                    {#                        <ul class="submenu">#}
+                    {#                            <li><a href="#">Pricing</a></li>#}
+                    {#                            <li><a href="#">Invoice</a></li>#}
+                    {#                            <li><a href="#">Timeline</a></li>#}
+                    {#                            <li><a href="#">FAQs</a></li>#}
+                    {#                            <li><a href="#">Maintenance</a></li>#}
+                    {#                            <li><a href="#">Coming Soon</a></li>#}
+                    {#                            <li><a href="#">Starter Page</a></li>#}
+                    {#                            <li><a href="#">Login</a></li>#}
+                    {#                            <li><a href="#">Register</a></li>#}
+                    {#                            <li><a href="#">Recover Password</a></li>#}
+                    {#                            <li><a href="#">Lock Screen</a></li>#}
+                    {#                            <li><a href="#">Error 404</a></li>#}
+                    {#                            <li><a href="#">Error 500</a></li>#}
+                    {#                        </ul>#}
+                    {#                    </li>#}
+                    {##}
+                    {#                    <li class="menu-title">组件</li>#}
+                    {##}
+                    {#                    <li>#}
+                    {#                        <a href="javascript:void(0);" class="waves-effect"><i class="icon-pencil-ruler"></i> <span> UI Elements <span#}
+                    {#                                class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>#}
+                    {#                        <ul class="submenu">#}
+                    {#                            <li><a href="#">Alerts</a></li>#}
+                    {#                            <li><a href="#">Badge</a></li>#}
+                    {#                            <li><a href="#">Buttons</a></li>#}
+                    {#                            <li><a href="#">Cards</a></li>#}
+                    {#                            <li><a href="#">Dropdowns</a></li>#}
+                    {#                            <li><a href="#">Navs</a></li>#}
+                    {#                            <li><a href="#">Tabs &amp; Accordions</a></li>#}
+                    {#                            <li><a href="#">Modals</a></li>#}
+                    {#                            <li><a href="#">Images</a></li>#}
+                    {#                            <li><a href="#">Progress Bars</a></li>#}
+                    {#                            <li><a href="#">Pagination</a></li>#}
+                    {#                            <li><a href="#">Popover & Tooltips</a></li>#}
+                    {#                            <li><a href="#">Spinner</a></li>#}
+                    {#                            <li><a href="#">Carousel</a></li>#}
+                    {#                            <li><a href="#">Video</a></li>#}
+                    {#                            <li><a href="#">Typography</a></li>#}
+                    {#                            <li><a href="#">Grid</a></li>#}
+                    {#                        </ul>#}
+                    {#                    </li>#}
+                    {##}
+                    {#                    <li>#}
+                    {#                        <a href="javascript:void(0);" class="waves-effect"><i class="icon-diamond"></i>#}
+                    {#                            <span> 高级UI <span class="float-right menu-arrow"><i#}
+                    {#                                    class="mdi mdi-chevron-right"></i></span> </span> </a>#}
+                    {#                        <ul class="submenu">#}
+                    {#                            <li><a href="#">Alertify</a></li>#}
+                    {#                            <li><a href="#">Rating</a></li>#}
+                    {#                            <li><a href="#">Nestable</a></li>#}
+                    {#                            <li><a href="#">Range Slider</a></li>#}
+                    {#                            <li><a href="#">Sweet-Alert</a></li>#}
+                    {#                            <li><a href="#">Lightbox</a></li>#}
+                    {#                        </ul>#}
+                    {#                    </li>#}
+                    {##}
+                    {#                    <li>#}
+                    {#                        <a href="javascript:void(0);" class="waves-effect"><i class="icon-todolist-check"></i><span> 表单 <span#}
+                    {#                                class="badge badge-pill badge-danger float-right">8</span> </span></a>#}
+                    {#                        <ul class="submenu">#}
+                    {#                            <li><a href="#">Form Elements</a></li>#}
+                    {#                            <li><a href="#">Form Validation</a></li>#}
+                    {#                            <li><a href="#">Form Advanced</a></li>#}
+                    {#                            <li><a href="#">Form Editors</a></li>#}
+                    {#                            <li><a href="#">Form File Upload</a></li>#}
+                    {#                            <li><a href="#">Form Mask</a></li>#}
+                    {#                            <li><a href="#">Summernote</a></li>#}
+                    {#                            <li><a href="#">Form Xeditable</a></li>#}
+                    {#                        </ul>#}
+                    {#                    </li>#}
+                    {##}
+                    {#                    <li>#}
+                    {#                        <a href="javascript:void(0);" class="waves-effect"><i class="icon-graph"></i><span> 图表 <span#}
+                    {#                                class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>#}
+                    {#                        <ul class="submenu">#}
+                    {#                            <li><a href="#">Morris Chart</a></li>#}
+                    {#                            <li><a href="#">Chartist Chart</a></li>#}
+                    {#                            <li><a href="#">Chartjs Chart</a></li>#}
+                    {#                            <li><a href="#">Flot Chart</a></li>#}
+                    {#                            <li><a href="#">C3 Chart</a></li>#}
+                    {#                            <li><a href="#">Jquery Knob Chart</a></li>#}
+                    {#                        </ul>#}
+                    {#                    </li>#}
+                    {##}
+                    {#                    <li>#}
+                    {#                        <a href="javascript:void(0);" class="waves-effect"><i class="icon-spread"></i><span> 表格 <span#}
+                    {#                                class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>#}
+                    {#                        <ul class="submenu">#}
+                    {#                            <li><a href="#">Basic Tables</a></li>#}
+                    {#                            <li><a href="#">Data Table</a></li>#}
+                    {#                            <li><a href="#">Responsive Table</a></li>#}
+                    {#                            <li><a href="#">Editable Table</a></li>#}
+                    {#                        </ul>#}
+                    {#                    </li>#}
+                    {##}
+                    {#                    <li>#}
+                    {#                        <a href="javascript:void(0);" class="waves-effect"><i class="icon-coffee"></i> <span> 图标  <span#}
+                    {#                                class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span></span> </a>#}
+                    {#                        <ul class="submenu">#}
+                    {#                            <li><a href="#">Material Design</a></li>#}
+                    {#                            <li><a href="#">Font Awesome</a></li>#}
+                    {#                            <li><a href="#">Outline Icons</a></li>#}
+                    {#                            <li><a href="#">Themify Icons</a></li>#}
+                    {#                        </ul>#}
+                    {#                    </li>#}
+                    {##}
+                    {#                    <li>#}
+                    {#                        <a href="javascript:void(0);" class="waves-effect"><i class="icon-map"></i><span> 地图 <span#}
+                    {#                                class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>#}
+                    {#                        <ul class="submenu">#}
+                    {#                            <li><a href="#"> Google Map</a></li>#}
+                    {#                            <li><a href="#"> Vector Map</a></li>#}
+                    {#                        </ul>#}
+                    {#                    </li>#}
+                    {##}
+                    {#                    <li>#}
+                    {#                        <a href="javascript:void(0);" class="waves-effect"><i class="icon-share"></i><span> 多等级 <span#}
+                    {#                                class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>#}
+                    {#                        <ul class="submenu">#}
+                    {#                            <li><a href="javascript:void(0);"> Menu 1</a></li>#}
+                    {#                            <li>#}
+                    {#                                <a href="javascript:void(0);">Menu 2 <span class="float-right menu-arrow"><i#}
+                    {#                                        class="mdi mdi-chevron-right"></i></span></a>#}
+                    {#                                <ul class="submenu">#}
+                    {#                                    <li><a href="javascript:void(0);">Menu 2.1</a></li>#}
+                    {#                                    <li><a href="javascript:void(0);">Menu 2.1</a></li>#}
+                    {#                                </ul>#}
+                    {#                            </li>#}
+                    {#                        </ul>#}
+                    {#                    </li>#}
+                    {##}
+                </ul>
+
+            </div>
+            <!-- Sidebar -->
+            <div class="clearfix"></div>
+
+        </div>
+        <!-- Sidebar -left -->
+
+    </div>
+    <!-- Left Sidebar End -->
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="page-title-box">
+                    <div class="row align-items-center">
+                        <div class="col-sm-6">
+                            <h4 class="page-title">{% block page_title %}{% endblock %}</h4>
+                        </div>
+                    </div>
+                    <!-- end row -->
+                </div>
+                <!-- end page-title -->
+
+                <!-- START ROW -->
+                {% block body %}
+
+                {% endblock %}
+                <!-- END ROW -->
+
+            </div>
+            <!-- container-fluid -->
+
+        </div>
+        <!-- content -->
+
+        <footer class="footer">
+            © 2019 品联科技 <span class="d-none d-sm-inline-block"> - APP测试 <i class="mdi mdi-heart text-danger"></i> by 辜林杰</span>.
+        </footer>
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Right content here -->
+    <!-- ============================================================== -->
+
+</div>
+<!-- END wrapper -->
+
+<!-- jQuery  -->
+<script src="{{ url_for('static', filename='front/js/base/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='front/js/base/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='front/js/base/metismenu.min.js') }}"></script>
+<script src="{{ url_for('static', filename='front/js/base/jquery.slimscroll.js') }}"></script>
+<script src="{{ url_for('static', filename='front/js/base/waves.min.js') }}"></script>
+
+
+<!--Morris Chart-->
+<script src="{{ url_for('static', filename='front/js/morris/morris.min.js') }}"></script>
+<script src="{{ url_for('static', filename='front/js/morris/raphael.min.js') }}"></script>
+
+
+<script src="{{ url_for('static', filename='front/js/base/dashboard.init.js') }}"></script>
+
+<!-- App js -->
+<script src="{{ url_for('static', filename='front/js/base/app.js') }}"></script>
+
+
+</body>
+
+</html>

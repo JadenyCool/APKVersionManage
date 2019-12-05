@@ -1,0 +1,122 @@
+{% extends 'front/front_signbase.html' %}
+{% from 'common/_macros.html' import static %}
+
+
+{% block title %}
+    重置密码
+{% endblock %}
+
+
+{% block head %}
+    {#    <link rel="stylesheet" href="{{ static('front/css/front_signin.css') }}">#}
+    {#    <script src="{{ static('front/js/front_signin.js') }}"></script>#}
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>忘记密码</title>
+    <meta content="Responsive admin theme build on top of Bootstrap 4" name="description"/>
+    <meta content="Themesdesign" name="author"/>
+    <link rel="shortcut icon" href="{{ url_for('static',filename='front/image/favicon.ico') }}" type="image/x-icon"/>
+    {% include 'common/_heads.html' %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/morris/morris.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/metismenu.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/style.css') }}">
+
+
+    <script src="{{ static('front/js/front_forgotPwd.js') }}"></script>
+{% endblock %}
+
+
+{#{% block page_title %}#}
+{#    {{ self.title() }}#}
+{#{% endblock %}#}
+
+{% block signbox %}
+    <div class="accountbg"></div>
+    <div class="home-btn d-none d-sm-block">
+        <a href="index.html" class="text-white"><i class="fas fa-home h2"></i></a>
+    </div>
+    <div class="wrapper-page">
+        <div class="card card-pages shadow-none">
+
+            <div class="card-body">
+
+                <h3 class="font-18 text-center">重置密码</h3>
+
+                <form class="form-horizontal m-t-30" action="#" method="post">
+
+                    <div class="col-12">
+                        <div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            输入你能够接收到验证码的 <b>邮箱地址</b> !
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-12">
+                            <label>邮箱地址</label>
+
+                            <input class="form-control" type="text" required="" name="email" placeholder="Email">
+
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-12">
+                            <label>验证码</label>
+                            <div class="input-group">
+                                <input class="form-control" type="text" required="" name="vercode" placeholder="验证码">
+                                {#                                style="cursor: pointer"显示小手#}
+                                <span class="input-group-text btn btn-default" id="send-email-captcha-btn">获取验证码</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-12">
+                            <label>新密码</label>
+
+                            <input class="form-control" type="password" required="" name="password1" placeholder="新密码">
+
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-12">
+                            <label>确认密码</label>
+
+                            <input class="form-control" type="password" required="" name="password2" placeholder="确认密码">
+
+
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center m-t-20">
+                        <div class="col-12">
+                            <button class="btn btn-primary btn-block btn-lg waves-effect waves-light" type="submit" id="submit">提交修改
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- jQuery  -->
+    <!-- jQuery  -->
+    <script src="{{ url_for('static', filename='front/js/base/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='front/js/base/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='front/js/base/metismenu.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='front/js/base/jquery.slimscroll.js') }}"></script>
+    <script src="{{ url_for('static', filename='front/js/base/waves.min.js') }}"></script>
+
+    <!-- App js -->
+    <script src="{{ url_for('static', filename='front/js/base/app.js') }}"></script>
+
+{% endblock %}

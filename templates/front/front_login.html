@@ -1,0 +1,65 @@
+{% extends 'front/front_signbase.html' %}
+{% from 'common/_macros.html' import static %}
+
+
+{% block title %}
+    APP测试管理平台登录
+{% endblock %}
+
+
+{% block head %}
+    <link rel="stylesheet" href="{{ static('front/css/front_signin.css') }}">
+    <script src="{{ static('front/js/front_signin.js') }}"></script>
+{% endblock %}
+
+
+{% block page_title %}
+    品联APP发布管理系统
+{% endblock %}
+
+{% block signbox %}
+    <div class="login-box">
+        <div class="card card-pages shadow-none">
+            <form action="" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="telephone" placeholder="手机号">
+                </div>
+
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="密码">
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="remember" value="0">记住我
+                    </label>
+                </div>
+
+                <div class="form-group text-center m-t-20">
+                    <div class="col-12">
+                        <button class="btn btn-primary btn-block btn-lg waves-effect waves-light" id="submit-signin-btn"
+                                type="submit">立即登录
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group row m-t-30 m-b-0">
+                    <div class="col-sm-7">
+                        <a href="{{ url_for('front.forgotPwd') }}" class="text-muted"><i class="fa fa-lock m-r-5"></i> 忘记
+                            密码?</a>
+                    </div>
+                    <div class="col-sm-5 text-right">
+                        <a href="{{ url_for('front.register') }}" class="text-muted">创建账号</a>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+    {% if message %}
+        <p class="alert alert-danger tips-error" role="alert">{{ message }}</p>
+    {% endif %}
+
+
+{% endblock %}

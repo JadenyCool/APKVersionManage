@@ -1,0 +1,3 @@
+$(function () {
+   $('.mprofile-btn').click()
+});
