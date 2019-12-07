@@ -2,7 +2,7 @@
 
 # 介绍
  对Android APK版本进行管理，下载。
- 
+ ![APK版本管理预览](https://github.com/JadenyCool/APKVersionManage/blob/master/static/images/preview.png)
 
 # 软件架构
 Centos7.4 + Python3 + Flask + mysql + nginx + uwsgi
@@ -18,10 +18,11 @@ Centos7.4 + Python3 + Flask + mysql + nginx + uwsgi
 
 将代码拷贝到虚拟环境的目录
 执行以下命令： 
-''' python manage.py db init 
+```python
+   python manage.py db init 
     python manage.py db migrate
     python manage.py db upgrade 
-'''
+```
 以上数据库表就完成了创建
           
 三、安装uwsgi并修改uwsgi.ini文件
@@ -31,7 +32,8 @@ Centos7.4 + Python3 + Flask + mysql + nginx + uwsgi
 以上安装教程可以参考：https://blog.csdn.net/Jayden_Gu/article/details/103031930
 
 # 修改config.py文件
-'''python
+
+```python
 # config databases
 HOST = '127.0.0.1'
 USERNAME = 'root'
@@ -45,5 +47,4 @@ MAIL_PORT = 25
 MAIL_USERNAME = 'XXXXXXXX'
 MAIL_PASSWORD = "XXXXXXX"  # 邮箱授权码，不是邮箱密码
 MAIL_DEFAULT_SENDER = 'XXXXXXXX'
-
-'''
+```
