@@ -29,3 +29,21 @@ Centos7.4 + Python3 + Flask + mysql + nginx + uwsgi
 四、安装ngnix并修改nginx.conf文件
 
 以上安装教程可以参考：https://blog.csdn.net/Jayden_Gu/article/details/103031930
+
+# 修改config.py文件
+'''
+# config databases
+HOST = '127.0.0.1'
+USERNAME = 'root'
+PASSWORD = 'root'
+DATABASE = 'PinnetRelease'
+PORT = '3306' 
+
+# config Email
+MAIL_SERVER = 'XXXXXXX'
+MAIL_PORT = 25
+MAIL_USERNAME = 'XXXXXXXX'
+MAIL_PASSWORD = "XXXXXXX"  # 邮箱授权码，不是邮箱密码
+MAIL_DEFAULT_SENDER = 'XXXXXXXX'
+
+'''
