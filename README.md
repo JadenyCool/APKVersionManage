@@ -31,7 +31,7 @@ Centos7.4 + Python3 + Flask + mysql + nginx + uwsgi
 以上安装教程可以参考：https://blog.csdn.net/Jayden_Gu/article/details/103031930
 
 # 修改config.py文件
-'''
+'''python
 # config databases
 HOST = '127.0.0.1'
 USERNAME = 'root'
