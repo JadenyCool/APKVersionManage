@@ -3,7 +3,7 @@ from apps.models import ReleaseVersionModel, ProjectLineModel
 
 # 数据库配置
 
-DEBUG = True
+# DEBUG = True
 
 # config databases
 HOST = '127.0.0.1'
